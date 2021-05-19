@@ -36,8 +36,6 @@ public class RoomPlant {
     }
     public RoomPlant(String name) throws PlantException {
         this(name,LocalDate.now(),7);
-        this.datePlanted = LocalDate.now();
-        this.wateringFrequency = 7;
     }
 
     public void SetName(String name)
@@ -52,13 +50,15 @@ public class RoomPlant {
     {
          this.datePlanted=datePlanted;
     }
-    public void SetDateWatering(LocalDate dateLastWatering)
-    {
-         this.dateLastWatering=dateLastWatering;
+    public void SetDateWatering(LocalDate dateLastWatering) throws PlantException {
+        this.dateLastWatering = dateLastWatering;
+        if (this.dateLastWatering.isBefore(this.datePlanted))
+            throw new PlantException("Last Watering Date (" + this.dateLastWatering + ") cannot be less then the date (" + this.datePlanted + ") when " + this.name + " was planted");
     }
-    public void SetWateringFrequency(int wateringFrequency)
-    {
-        this.wateringFrequency=wateringFrequency;
+    public void SetWateringFrequency(int wateringFrequency) throws PlantException {
+        this.wateringFrequency = wateringFrequency;
+        if (this.wateringFrequency <= 0)
+            throw new PlantException("Watering Frequency (" + this.wateringFrequency + ") cannot be less then or equal to 0");
     }
 
     public String GetName()

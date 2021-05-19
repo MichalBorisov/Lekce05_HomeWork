@@ -12,6 +12,9 @@ public class Main {
         RoomPlantList roomPlantList = new RoomPlantList();
         roomPlantList.AddPlantToListFromFile(INPUT_FILE_PATH);
 
+        roomPlantList.RemovePlantFromList(22);
+        roomPlantList.RemovePlantFromList(roomPlantList.GetPlantFromList(0));
+
         RoomPlant roomPlant = null;
         try {
             roomPlant = new RoomPlant("ROBERT","Music friendly", LocalDate.of(1970,6,7), LocalDate.of(2021,6,7),20);

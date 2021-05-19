@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class RoomPlantList {
-    private static final String FILE_ITEM_DELIMITER = " \\| ";
+    private static final String FILE_READ_ITEM_DELIMITER = " \\| ";
+    private static final String FILE_WRITE_ITEM_DELIMITER = " | ";
     ArrayList<RoomPlant> roomPlants = new ArrayList<>();
 
     public RoomPlant ParseTextIntoRoomPlant(String plantLine) throws PlantException {
-        String[] plantInfo = plantLine.split(FILE_ITEM_DELIMITER);
+        String[] plantInfo = plantLine.split(FILE_READ_ITEM_DELIMITER);
         LocalDate planted = null;
         LocalDate lastWatered = null;
         int wateringFrequency = -1;
@@ -61,10 +62,10 @@ public class RoomPlantList {
             if(roomPlants.size() > 0)
             {
                 for (RoomPlant plant : roomPlants) {
-                    writer.write(plant.GetName() + " | "
-                            + plant.GetNotes() + " | "
-                            + plant.GetWateringFrequency() + " | "
-                            + plant.GetDateWatering() + " | "
+                    writer.write(plant.GetName() + FILE_WRITE_ITEM_DELIMITER
+                            + plant.GetNotes() + FILE_WRITE_ITEM_DELIMITER
+                            + plant.GetWateringFrequency() + FILE_WRITE_ITEM_DELIMITER
+                            + plant.GetDateWatering() + FILE_WRITE_ITEM_DELIMITER
                             + plant.GetDatePlanted()  + "\r\n");
                 }
             }
@@ -76,21 +77,34 @@ public class RoomPlantList {
 
     public void AddPlant(RoomPlant plant)
     {
-        roomPlants.add(plant);
+        if(plant != null)
+            roomPlants.add(plant);
+        else
+            System.out.println("Do not want empty cells in Plant Array");
     }
 
     public void RemovePlantFromList(int index)
     {
-        roomPlants.remove(index);
+        if(index < roomPlants.size() && index >= 0)
+            roomPlants.remove(index);
+        else
+            System.out.println("Index '"+index+"' is out of Plant Array bounds");
     }
     public void RemovePlantFromList(RoomPlant plant)
     {
-        roomPlants.remove(plant);
+        if(roomPlants.contains(plant))
+            roomPlants.remove(plant);
+        else
+            System.out.println(plant.GetName() + " is not contained in the Plant list");
     }
 
     public RoomPlant GetPlantFromList(int index)
     {
-        return roomPlants.get(index);
+        if(index < roomPlants.size() && index >= 0)
+            return roomPlants.get(index);
+        else
+            System.out.println("Index '"+index+"' is out of Plant Array bounds");
+        return null;
     }
 
 
