@@ -12,8 +12,16 @@ public class Main {
         RoomPlantList roomPlantList = new RoomPlantList();
         roomPlantList.AddPlantToListFromFile(INPUT_FILE_PATH);
 
-        roomPlantList.RemovePlantFromList(22);
-        roomPlantList.RemovePlantFromList(roomPlantList.GetPlantFromList(0));
+        try {
+            roomPlantList.RemovePlantFromList(22);
+        } catch (PlantException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            roomPlantList.RemovePlantFromList(roomPlantList.GetPlantFromList(0));
+        } catch (PlantException e) {
+            System.out.println(e.getMessage());
+        }
 
         RoomPlant roomPlant = null;
         try {
